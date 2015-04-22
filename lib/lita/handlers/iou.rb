@@ -2,7 +2,9 @@ module Lita
   module Handlers
     class Iou < Handler
       REDIS_KEY = 'iou'
-      route(/^!iou\s+([^\s]+)$/i, :add_iou)
+      route(/^!iou\s+([^\s]+)$/i, :add_iou, help: { '!iou [nick]' => 'Owe [nick] one 🍺.'})
+      route(/^!iou paid\s+([^\s]+)$/i, :remove_iou, help: { '!iou paid [nick]' => 'Pay back [nick]\'s iou.'})
+      route(/^!ious$/i, :show_ious, help: { '!ious' => 'List your outstanding 🍺 ious.'})
 
       def add_iou(response)
         ower = response.user.name
@@ -14,6 +16,37 @@ module Lita
         response.reply "#{ower} now owes #{owee} #{iou_count} #{beer_icons iou_count.to_i }."
       end
 
+      def remove_iou(response)
+        ower = response.user.name
+        owee = response.matches[0][0]
+        key = REDIS_KEY + ".#{ower}"
+        iou_count = redis.hget(key, owee).to_i
+
+        if iou_count > 0
+          iou_count -= 1
+          if iou_count == 0
+            redis.hdel(key, owee)
+          else
+            redis.hset(key, owee, iou_count)
+          end
+          response.reply "#{ower} now owes #{owee} #{iou_count} #{beer_icons iou_count.to_i }."
+        end
+      end
+
+      def show_ious(response)
+        ower = response.user.name
+        key = REDIS_KEY + ".#{ower}"
+        ious = redis.hgetall(key)
+
+        reply_str = "#{ower} owes"
+        data_str = ''
+        ious.each do |nick, num|
+          data_str += " #{nick} #{beer_icons num.to_i}," #beer#{(num.to_i > 1)? 's' : ''},
+        end
+        data_str.sub! /,$/, ''
+        response.reply reply_str + data_str
+      end
+
       def beer_icons(count)
         str = ''
         0..count.times do
@@ -21,7 +54,6 @@ module Lita
         end
         str
       end
-
     end
 
     Lita.register_handler(Iou)
