@@ -3,7 +3,7 @@ module Lita
     class Iou < Handler
       REDIS_KEY = 'iou'
       route(/^!iou\s+([^\s]+)/i, :add_iou, help: { '!iou [nick]' => 'Owe [nick] one 🍺.'})
-      route(/^!iou paid\s+([^\s]+)/i, :remove_iou, help: { '!iou paid [nick]' => 'Pay back [nick]\'s iou.'})
+      route(/^!ioupaid\s+([^\s]+)/i, :remove_iou, help: { '!ioupaid [nick]' => 'Pay back [nick]\'s iou.'})
       route(/^!iou(s?)$/i, :show_ious, help: { '!ious' => 'List your outstanding 🍺 ious.'})
 
       def add_iou(response)
