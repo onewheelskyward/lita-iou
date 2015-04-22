@@ -17,26 +17,11 @@ class IOUBeer
 Thanks to @incanus77 for the iou idea.
   EOF
 
-  def add_iou(msg, query)
-    ower = msg.user.name
-    owee = query
-    IOU.create(ower: ower, owee: owee, channel: msg.channel)
-    msg.reply "#{ower} now owes #{owee} one #{beer_icons 1}."
-  end
-
   def add_uome(msg, query)
     owee = msg.user.name
     ower = query
     IOU.create(ower: ower, owee: owee, channel: msg.channel)
     msg.reply "#{ower} now owes #{owee} one #{beer_icons 1}."
-  end
-
-  def beer_icons(count)
-    str = ''
-    0..count.times do
-      str += "ð"
-    end
-    str
   end
 
   # ow about '<person> is owed x beers by ubercolin, y beers by status, etc for a total of z beers'?

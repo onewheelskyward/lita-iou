@@ -17,7 +17,7 @@ module Lita
       def beer_icons(count)
         str = ''
         0..count.times do
-          str += "ð"
+          str += "🍺"
         end
         str
       end
