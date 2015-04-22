@@ -39,13 +39,17 @@ module Lita
         key = REDIS_KEY + ".#{ower}"
         ious = redis.hgetall(key)
 
-        reply_str = "#{ower} owes"
-        data_str = ''
-        ious.each do |nick, num|
-          data_str += " #{nick} #{beer_icons num.to_i}," #beer#{(num.to_i > 1)? 's' : ''},
+        if ious.length == 0
+          response.reply "#{ower} owes nothing."
+        else
+          reply_str = "#{ower} owes"
+          data_str = ''
+          ious.each do |nick, num|
+            data_str += " #{nick} #{beer_icons num.to_i}," #beer#{(num.to_i > 1)? 's' : ''},
+          end
+          data_str.sub! /,$/, ''
+          response.reply reply_str + data_str
         end
-        data_str.sub! /,$/, ''
-        response.reply reply_str + data_str
       end
 
       def beer_icons(count)
