@@ -26,10 +26,11 @@ module Lita
           iou_count -= 1
           if iou_count == 0
             redis.hdel(key, owee)
+            response.reply "#{ower} has fully paid back #{owee}."
           else
             redis.hset(key, owee, iou_count)
+            response.reply "#{ower} now owes #{owee} #{iou_count} #{beer_icons iou_count.to_i }."
           end
-          response.reply "#{ower} now owes #{owee} #{iou_count} #{beer_icons iou_count.to_i }."
         end
       end
 
