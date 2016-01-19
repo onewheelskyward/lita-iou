@@ -61,6 +61,6 @@ module Lita
       end
     end
 
-    Lita.register_handler(Iou)
+    Lita.register_handler(OnewheelIou)
   end
 end
