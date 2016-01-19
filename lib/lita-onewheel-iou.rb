@@ -6,7 +6,7 @@ Lita.load_locales Dir[File.expand_path(
 
 require 'lita/handlers/onewheel-iou'
 
-Lita::Handlers::Iou.template_root File.expand_path(
+Lita::Handlers::OnewheelIou.template_root File.expand_path(
   File.join('..', '..', 'templates'),
  __FILE__
 )
