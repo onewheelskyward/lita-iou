@@ -1,6 +1,6 @@
 module Lita
   module Handlers
-    class Iou < Handler
+    class OnewheelIou < Handler
       REDIS_KEY = 'iou'
       route(/^iou\s+([^\s]+)/i, :add_iou, help: { 'iou [nick]' => 'Owe [nick] one 🍺.'})
       route(/^ioupaid\s+([^\s]+)/i, :remove_iou, help: { 'ioupaid [nick]' => 'Pay back [nick]\'s iou.'})
