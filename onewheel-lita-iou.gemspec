@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['andrew.kreps@gmail.com']
   spec.description   = 'Handles beer IOUs.'
   spec.summary       = 'Use !iou to make a note of a friend to whom you owe a beer.'
-  spec.homepage      = 'https://github.com/onewheelskyward/lita-iou'
+  spec.homepage      = 'https://github.com/onewheelskyward/lita-onewheel-iou'
   spec.license       = 'MIT'
   spec.metadata      = { 'lita_plugin_type' => 'handler'}
 
